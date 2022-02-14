@@ -1,0 +1,49 @@
+name: Run tests on Ubuntu, Windows and Macos
+on:
+  pull_request:
+    branches: ["main"]
+  push:
+    branches: ["main"]
+
+jobs:
+  utests:
+    name: Run Unit tests - OS > Ubuntu Latest - Go 1.16
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.16
+
+      - name: Running Unit Tests
+        run: make utest
+
+  itests:
+    name: Run Integration tests - OS > Ubuntu Latest - Go 1.16
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.16
+
+      - name: Running Integration Tests
+        run: make itest
+
+  build:
+    name: Build the code - OS > Ubuntu Latest - Go 1.16
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.16
+
+      - name: Building the application
+        run: make build-all
