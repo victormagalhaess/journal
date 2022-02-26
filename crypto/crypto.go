@@ -1,13 +1,14 @@
 package crypto
 
 import (
-	"crypto/sha256"
 	"fmt"
+	"hash/fnv"
 	"time"
 )
 
 func GenerateHash() string {
-
-	timestamp := time.Now().Unix()
-	return fmt.Sprintf("%x", sha256.Sum256([]byte(string(timestamp))))[:16]
+	timestamp := fmt.Sprint(time.Now().Unix())
+	hash := fnv.New32a()
+	hash.Write([]byte(timestamp))
+	return fmt.Sprint(hash.Sum32())
 }
