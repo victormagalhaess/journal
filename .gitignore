@@ -14,6 +14,8 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-main
+# Build binaries on linux
+journal
 
+# Test yaml flatfile
 journal.yaml
