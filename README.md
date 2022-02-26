@@ -1,8 +1,8 @@
 # Journal
 
 Journal is a command line journal heavily inspired by [journal-cli](https://journalcli.app/).
-It aims to keep all your entries in a easy to read and manipulate file, allowing you to take notes and consulting them lates.
-Entries saved in the journal are logged in the following way when read:
+It aims to keep all your entries in an easy to read and manipulate file, allowing you to take notes and consulting them later.
+Entries saved on the journal are logged in the following way when read:
 ```sh
 date: 26/02/2022
     entry: Why did you choose this day as an example? It is an ordinary day nothing special happened this day.
@@ -83,8 +83,7 @@ journal delete today
 journal delete yesterday
 ```
 
-Be aware that the delete flag using days as filter will erase all the data from the selected day. The way to erase only a specific entry
-is to use the delete command passing the Hash of the entry:
+Be aware that the delete command using days as filter will erase all the data from the selected day. The way to erase only a specific entry is to use the delete command passing the Hash of the entry:
 
  ```sh
 journal delete 2705810935
