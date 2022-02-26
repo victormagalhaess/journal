@@ -2,7 +2,12 @@
 
 Journal is a command line journal heavily inspired by [journal-cli](https://journalcli.app/).
 It aims to keep all your entries in a easy to read and manipulate file, allowing you to take notes and consulting them lates.
-
+Entries saved in the journal are logged in the following way when read:
+```sh
+date: 26/02/2022
+    entry: Why did you choose this day as an example? It is an ordinary day nothing special happened this day.
+    hash: 2705810935
+```
 # Usage
 
 To create an entry simply type:
@@ -12,10 +17,14 @@ journal add "Today I waste 15 minutes thinking in an entry example, :("
 ```
 
 The entry will be saved as readable text in the cli installation folder. Entries that don't specifies a date will be saved as "today".
-You can also specify a date using the add command: (Be aware that it is not allowed to write entries about days in the future).
+You can also specify a date using the add command:
 
 ```sh
 journal add 14/2/2022 "Oh my god, I totally forgot to write about how normal 14/2/2022 was!"
+```
+
+```sh
+journal add 26-02-2022 "In this day I thought that allowing people do use dashs as date separator may be a good idea!"
 ```
 
 The add command also supports some special cases:
@@ -28,7 +37,7 @@ journal add today "I'm not thirsty at all today."
 journal add yesterday "Wow, I drank a lot of water yesterday, in fact, I drank so much that I didn't had time to write an entry."
 ```
 
-If you try to write two entries in the same date, the entries will be appended in one big entry.
+You can add as many entries per day as you want. When you try to read them the journal will log in the order they were wrote.
 
 To read an entry, you must use the read command, I works pretty similar to the add command, so if you do not specify a date it will read the "today" entry:
 
@@ -72,6 +81,13 @@ journal delete today
 
 ```sh
 journal delete yesterday
+```
+
+Be aware that the delete flag using days as filter will erase all the data from the selected day. The way to erase only a specific entry
+is to use the delete command passing the Hash of the entry:
+
+ ```sh
+journal delete 2705810935
 ```
 
 # Build
