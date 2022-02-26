@@ -16,9 +16,8 @@ limitations under the License.
 package cmd
 
 import (
+	d "journal/date"
 	"journal/repository"
-	"log"
-	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -30,7 +29,7 @@ var addCmd = &cobra.Command{
 	Long: `The add command is used to create a new entry in the journal. 
 It may or may not take a date parameter and the text used.
 If no date parameter is passed the entry will be saved as todays entry.
-The date parameter can be nothing, a DD/MM/YYYY date, "yesterday" or "today".
+The date parameter can be nothing, a DD/MM/YYYY date, a DD-MM-YYYY date, "yesterday" or "today".
 Usage:
 journal add "Today I waste 15 minutes thinking in an entry example, :("
 journal add 14/2/2022 "Oh my god, I totally forgot to write about how normal 14/2/2022 was!"
@@ -42,28 +41,17 @@ journal add today "I'm not thirsty at all today."`,
 
 func init() {
 	rootCmd.AddCommand(addCmd)
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// addCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// addCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
+// addEntry process the console entry and call the repository.AddEntry to save the data.
 func addEntry(args []string) {
-	date := time.Now().Format("16/10/2000")
+	var date string
 	message := ""
 	if len(args) == 1 {
+		date = d.DateParse("")
 		message = args[0]
 	} else {
-		newDate, err := time.Parse("02/01/2006", args[0])
-		if err != nil {
-			log.Fatalf("error: %v", err)
-		}
-		date = newDate.Format("16/10/2000")
+		date = d.DateParse(args[0])
 		message = args[1]
 	}
 	repository.AddEntry(date, message)
