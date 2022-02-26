@@ -29,7 +29,7 @@ var deleteCmd = &cobra.Command{
 	It may or may not take a date parameter.
 	If no date parameter is passed the today's entry will be deleted.
 	The date parameter can be nothing, a DD/MM/YYYY date, "yesterday" or "today".
-	Example:
+	Usage:
 	journal delete 
 	journal delete 14/2/2022
 	journal delete today`,

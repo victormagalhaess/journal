@@ -29,7 +29,7 @@ var readCmd = &cobra.Command{
 	It may or may not take a date parameter.
 	If no date parameter is passed the today's entry will be read.
 	The date parameter can be nothing, a DD/MM/YYYY date, "yesterday" or "today".
-	Example:
+	Usage:
 	journal read 
 	journal read 14/2/2022
 	journal read today`,
