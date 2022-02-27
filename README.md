@@ -1,4 +1,7 @@
 # Journal
+<p align="center">
+  <img src="https://github.com/victormagalhaess/journal/blob/main/public/journal.png?raw=true" width="200" alt="Journal Logo">
+</p>
 
 Journal is a command line journal heavily inspired by [journal-cli](https://journalcli.app/).
 It aims to keep all your entries in an easy to read and manipulate file, allowing you to take notes and consulting them later.
@@ -110,3 +113,8 @@ journal is built in go, and can be built for your machine using:
 ```sh
 make build
 ```
+
+# Credits
+
+The journal logo was made using Freepik flaticon free icons:
+<a href="https://www.flaticon.com/free-icons/journal" title="journal icons">Journal icons created by Freepik - Flaticon</a>
