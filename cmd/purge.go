@@ -22,6 +22,9 @@ It does not receive any parameter.
 Usage: 
 journal purge`,
 	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) > 0 {
+			log.Fatal("Error: journal purge must not receive any parameter!\n")
+		}
 		purgeEntries()
 	},
 }
