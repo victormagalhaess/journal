@@ -16,9 +16,9 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
 	d "journal/date"
 	"journal/log"
+	"journal/output"
 	"journal/repository"
 
 	"github.com/spf13/cobra"
@@ -56,5 +56,5 @@ func readEntries(args []string) {
 		date = d.DateParse(args[0])
 	}
 	entries := repository.ReadEntries(date)
-	fmt.Print(entries)
+	output.OutputEntries(entries)
 }

@@ -11,6 +11,7 @@ var (
 	red    = "\033[31m"
 	green  = "\033[32m"
 	yellow = "\033[33m"
+	white  = "\033[97m"
 )
 
 func adjustEnv() {
@@ -19,6 +20,7 @@ func adjustEnv() {
 		red = ""
 		green = ""
 		yellow = ""
+		white = ""
 	}
 }
 
@@ -29,7 +31,15 @@ func print(message string, color string) {
 
 func printf(message string, color string, obj ...interface{}) {
 	adjustEnv()
-	fmt.Printf(color+message+reset, obj)
+	fmt.Printf(color+message+reset, obj...)
+}
+
+func Print(message string) {
+	print(message, white)
+}
+
+func Printf(message string, obj ...interface{}) {
+	printf(message, white, obj...)
 }
 
 func Error(message string) {
@@ -37,11 +47,11 @@ func Error(message string) {
 }
 
 func ErrorF(message string, obj ...interface{}) {
-	printf(message, red, obj)
+	printf(message, red, obj...)
 }
 
 func FatalF(message string, obj ...interface{}) {
-	ErrorF(message, obj)
+	ErrorF(message, obj...)
 	os.Exit(1)
 }
 
@@ -55,7 +65,7 @@ func Success(message string) {
 }
 
 func SuccessF(message string, obj ...interface{}) {
-	printf(message, green, obj)
+	printf(message, green, obj...)
 }
 
 func Warning(message string) {
@@ -63,5 +73,5 @@ func Warning(message string) {
 }
 
 func Warningf(message string, obj ...interface{}) {
-	printf(message, yellow, obj)
+	printf(message, yellow, obj...)
 }
