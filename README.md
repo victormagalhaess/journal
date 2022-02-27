@@ -110,3 +110,8 @@ journal is built in go, and can be built for your machine using:
 ```sh
 make build
 ```
+
+# Credits
+
+The journal logo was made using Freepik flaticon free icons:
+<a href="https://www.flaticon.com/free-icons/journal" title="journal icons">Journal icons created by Freepik - Flaticon</a>
