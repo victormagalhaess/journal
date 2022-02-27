@@ -25,7 +25,7 @@ func read() (string, error) {
 	return string(content), err
 }
 
-func append(entry string) error {
+func add(entry string) error {
 	file, err := flatfile.Open()
 	defer flatfile.Close(file)
 	if err != nil {

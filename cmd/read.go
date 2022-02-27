@@ -17,6 +17,9 @@ package cmd
 
 import (
 	"fmt"
+	d "journal/date"
+	"journal/log"
+	"journal/repository"
 
 	"github.com/spf13/cobra"
 )
@@ -34,20 +37,24 @@ var readCmd = &cobra.Command{
 	journal read 14/2/2022
 	journal read today`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("read called")
+		if len(args) > 1 {
+			log.Fatal("Error! journal add must receive 0 or 1 parameters, try journal read --help to see more.\n")
+		}
+		readEntries(args)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(readCmd)
+}
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// readCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// readCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+func readEntries(args []string) {
+	var date string
+	if len(args) == 0 {
+		date = d.DateParse("")
+	} else {
+		date = d.DateParse(args[0])
+	}
+	entries := repository.ReadEntries(date)
+	fmt.Print(entries)
 }
