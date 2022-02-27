@@ -58,5 +58,5 @@ func addEntry(args []string) {
 		date = d.DateParse(args[0])
 		message = args[1]
 	}
-	repository.AddEntry(date, message)
+	repository.NewEntry(date, message)
 }

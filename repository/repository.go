@@ -36,3 +36,15 @@ func add(entry string) error {
 	}
 	return nil
 }
+
+func clean() error {
+	file, err := flatfile.Open()
+	defer flatfile.Close(file)
+	if err != nil {
+		return err
+	}
+	if err := file.Truncate(0); err != nil {
+		return err
+	}
+	return nil
+}

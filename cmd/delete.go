@@ -16,7 +16,9 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
+	d "journal/date"
+	"journal/log"
+	"journal/repository"
 
 	"github.com/spf13/cobra"
 )
@@ -29,12 +31,17 @@ var deleteCmd = &cobra.Command{
 	It may or may not take a date parameter.
 	If no date parameter is passed the today's entry will be deleted.
 	The date parameter can be nothing, a DD/MM/YYYY date, "yesterday" or "today".
+	You can also specify a hash to delete a single entry.
 	Usage:
 	journal delete 
 	journal delete 14/2/2022
-	journal delete today`,
+	journal delete today
+	journal delete 2966741453`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("delete called")
+		if len(args) > 1 {
+			log.Fatal("Error! journal delete must receive 0 or 1 parameters, try journal delete --help to see more.\n")
+		}
+		deleteEntry(args)
 	},
 }
 
@@ -50,4 +57,16 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// deleteCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+}
+
+func deleteEntry(args []string) {
+	key := args[0]
+	isDate := false
+	if isDate = d.IsDate(key); isDate {
+		key = d.DateParse(args[0])
+		log.Warningf("Deleting all entries of the date: %v\n", key)
+	} else {
+		log.Warningf("Deleting the entry with Hash: %v\n", key)
+	}
+	repository.DeleteEntry(key, isDate)
 }

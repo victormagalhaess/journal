@@ -13,7 +13,7 @@ const (
 	Separator = "# end\n"
 )
 
-func AddEntry(date string, text string) {
+func NewEntry(date string, text string) {
 	entry := &Entry{
 		Date: date,
 		Text: Text{
@@ -21,6 +21,11 @@ func AddEntry(date string, text string) {
 			Hash:  crypto.GenerateHash(),
 		},
 	}
+	addEntry(*entry)
+	log.Success("Entry added with success!\n")
+}
+
+func addEntry(entry Entry) {
 	d, err := yaml.Marshal(&entry)
 	if err != nil {
 		log.Fatal("Error: An error occurred saving the entry!\n")
@@ -28,7 +33,6 @@ func AddEntry(date string, text string) {
 	}
 	data := string(d) + Separator
 	add(data)
-	log.Success("Entry added with success!\n")
 }
 
 func ReadEntries(date string) []Entry {
@@ -51,10 +55,31 @@ func ReadEntries(date string) []Entry {
 		if err != nil {
 			log.Fatal("Error: An error occurred unparsing the entries!\n")
 		}
-		if entry.Date == date {
+		if entry.Date == date || date == "" {
 			entries = append(entries, *entry)
 		}
 	}
 
 	return entries
+}
+
+func CleanFile() {
+	if err := clean(); err != nil {
+		log.Fatal("Error: An error occurred cleaning the file!")
+	}
+}
+
+func DeleteEntry(key string, isDate bool) {
+	processedEntries := make([]Entry, 0)
+	entries := ReadEntries("")
+	for _, entry := range entries {
+		if (isDate && entry.Date == key) || entry.Text.Hash == key {
+			continue
+		}
+		processedEntries = append(processedEntries, entry)
+	}
+	CleanFile()
+	for _, entry := range processedEntries {
+		addEntry(entry)
+	}
 }

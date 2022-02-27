@@ -16,6 +16,19 @@ var specialDates map[string]dateFn = map[string]dateFn{
 	yesterday: func() time.Time { return time.Now().AddDate(0, 0, -1) },
 }
 
+func IsDate(input string) bool {
+	if _, exists := specialDates[input]; !exists {
+		_, err := time.Parse(slashDDMMYY, input)
+		if err != nil {
+			_, err = time.Parse(dashDDMMYY, input)
+			if err != nil {
+				return false
+			}
+		}
+	}
+	return true
+}
+
 func DateParse(input string) string {
 	var (
 		date time.Time
