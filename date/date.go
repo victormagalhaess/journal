@@ -27,7 +27,7 @@ func DateParse(input string) string {
 		if err != nil {
 			date, err = time.Parse(dashDDMMYY, input)
 			if err != nil {
-				return dateFormatter(time.Now())
+				date = time.Now()
 			}
 		}
 	} else {
