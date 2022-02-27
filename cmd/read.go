@@ -18,8 +18,8 @@ package cmd
 import (
 	d "journal/date"
 	"journal/log"
-	"journal/output"
 	"journal/repository"
+	"journal/stream"
 
 	"github.com/spf13/cobra"
 )
@@ -29,10 +29,10 @@ var readCmd = &cobra.Command{
 	Use:   "read",
 	Short: "read - loads an entry from the journal",
 	Long: `The read command is used to retrieve an entry from the journal. 
-	It may or may not take a date parameter.
-	If no date parameter is passed the today's entry will be read.
-	The date parameter can be nothing, a DD/MM/YYYY date, "yesterday" or "today".
-	Usage:
+It may or may not take a date parameter.
+If no date parameter is passed the today's entry will be read.
+The date parameter can be nothing, a DD/MM/YYYY date, "yesterday" or "today".
+Usage:
 	journal read 
 	journal read 14/2/2022
 	journal read today`,
@@ -56,5 +56,5 @@ func readEntries(args []string) {
 		date = d.DateParse(args[0])
 	}
 	entries := repository.ReadEntries(date)
-	output.OutputEntries(entries)
+	stream.OutputEntries(entries)
 }

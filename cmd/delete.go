@@ -28,11 +28,11 @@ var deleteCmd = &cobra.Command{
 	Use:   "delete",
 	Short: "delete - erases an entry from the journal",
 	Long: `The delete command is used to erase an entry from the journal. 
-	It may or may not take a date parameter.
-	If no date parameter is passed the today's entry will be deleted.
-	The date parameter can be nothing, a DD/MM/YYYY date, "yesterday" or "today".
-	You can also specify a hash to delete a single entry.
-	Usage:
+It may or may not take a date parameter.
+If no date parameter is passed the today's entry will be deleted.
+The date parameter can be nothing, a DD/MM/YYYY date, "yesterday" or "today".
+You can also specify a hash to delete a single entry.
+Usage:
 	journal delete 
 	journal delete 14/2/2022
 	journal delete today
@@ -47,16 +47,6 @@ var deleteCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(deleteCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// deleteCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// deleteCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 func deleteEntry(args []string) {
