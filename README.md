@@ -4,9 +4,9 @@ Journal is a command line journal heavily inspired by [journal-cli](https://jour
 It aims to keep all your entries in an easy to read and manipulate file, allowing you to take notes and consulting them later.
 Entries saved on the journal are logged in the following way when read:
 ```sh
-date: 26/02/2022
-    entry: Why did you choose this day as an example? It is an ordinary day nothing special happened this day.
-    hash: 2705810935
+Date: 26/02/2022
+  Hash: 2705810935
+  Message: Why did you choose this day as an example? It is an ordinary day nothing special happened this day.
 ```
 # Usage
 
@@ -61,7 +61,8 @@ journal read today
 journal read yesterday
 ```
 
-Last but not least, you can also delete entries using the delete command, it follows the same principle as the other two flags, so if you do not specify a date the today entry will be deleted:
+You can also delete entries using the delete command, it follows the same principle as the other two flags, so if you do not specify a date the today entry will be deleted:
+> :warning: **Be aware**: Deleting is a permanent action, the deleted entries will be gone forever!
 
 ```sh
 journal delete
@@ -87,6 +88,19 @@ Be aware that the delete command using days as filter will erase all the data fr
 
  ```sh
 journal delete 2705810935
+```
+
+You can also clean all your entries using the purge command, it does not accepts any parameter or flags and clean all your entries.
+> :warning: **Be aware**: Purging your journal is irreversible and you will not be able to retrieve your entries anymore!
+
+```sh
+journal purge
+```
+
+Last but not least, you can also read all your entries using the dump command, it does not accepts any parameter or flags and outputs all your entries.
+
+```sh
+journal dump
 ```
 
 # Build
