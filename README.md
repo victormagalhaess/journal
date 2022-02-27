@@ -1,77 +1,106 @@
 # Journal
 
 Journal is a command line journal heavily inspired by [journal-cli](https://journalcli.app/).
-It aims to keep all your entries in a easy to read and manipulate file, allowing you to take notes and consulting them lates.
-
+It aims to keep all your entries in an easy to read and manipulate file, allowing you to take notes and consulting them later.
+Entries saved on the journal are logged in the following way when read:
+```sh
+Date: 26/02/2022
+  Hash: 2705810935
+  Message: Why did you choose this day as an example? It is an ordinary day nothing special happened this day.
+```
 # Usage
 
 To create an entry simply type:
 
 ```sh
-journal "Today I waste 15 minutes thinking in an entry example, :("
+journal add "Today I waste 15 minutes thinking in an entry example, :("
 ```
 
 The entry will be saved as readable text in the cli installation folder. Entries that don't specifies a date will be saved as "today".
-You can also specify a date using the -n flag: (Be aware that it is not allowed to write entries about days in the future).
+You can also specify a date using the add command:
 
 ```sh
-journal -n 14/2/2022 "Oh my god, I totally forgot to write about how normal 14/2/2022 was!"
-```
-
-The -n flag also supports some special cases:
-
-```sh
-journal -n today "I'm not thirsty at all today."
+journal add 14/2/2022 "Oh my god, I totally forgot to write about how normal 14/2/2022 was!"
 ```
 
 ```sh
-journal -n yesterday "Wow, I drank a lot of water yesterday, in fact I drank so much that I didn't had time to write an entry."
+journal add 26-02-2022 "In this day I thought that allowing people do use dashs as date separator may be a good idea!"
 ```
 
-If you try to write two entries in the same date, the entries will be appended in one big entry.
-
-To read an entry, you must use the -r flag, I works pretty similar to the -n flag, so if you do not specify a date it will read the "today" entry:
+The add command also supports some special cases:
 
 ```sh
-journal -r
+journal add today "I'm not thirsty at all today."
+```
+
+```sh
+journal add yesterday "Wow, I drank a lot of water yesterday, in fact, I drank so much that I didn't had time to write an entry."
+```
+
+You can add as many entries per day as you want. When you try to read them the journal will log in the order they were wrote.
+
+To read an entry, you must use the read command, I works pretty similar to the add command, so if you do not specify a date it will read the "today" entry:
+
+```sh
+journal read
 ```
 
 You can also specify a date to consult:
 
 ```sh
-journal -r 14/2/2022
+journal read 14/2/2022
 ```
 
-The -r flag also supports some special cases:
+The read command also supports some special cases:
 
 ```sh
-journal -r today
+journal read today
 ```
 
 ```sh
-journal -r yesterday
+journal read yesterday
 ```
 
-Last but not least, you can also delete entries using the flag -d, it follows the same principle as the other two flags, so if you do not specify a date the today entry will be deleted:
+You can also delete entries using the delete command, it follows the same principle as the other two flags, so if you do not specify a date the today entry will be deleted:
+> :warning: **Be aware**: Deleting is a permanent action, the deleted entries will be gone forever!
 
 ```sh
-journal -d
+journal delete
 ```
 
 You can also specify a date to delete:
 
 ```sh
-journal -d 14/2/2022
+journal delete 14/2/2022
 ```
 
-The -d flag also supports some special cases:
+The delete command also supports some special cases:
 
 ```sh
-journal -d today
+journal delete today
 ```
 
 ```sh
-journal -d yesterday
+journal delete yesterday
+```
+
+Be aware that the delete command using days as filter will erase all the data from the selected day. The way to erase only a specific entry is to use the delete command passing the Hash of the entry:
+
+ ```sh
+journal delete 2705810935
+```
+
+You can also clean all your entries using the purge command, it does not accepts any parameter or flags and clean all your entries.
+> :warning: **Be aware**: Purging your journal is irreversible and you will not be able to retrieve your entries anymore!
+
+```sh
+journal purge
+```
+
+Last but not least, you can also read all your entries using the dump command, it does not accepts any parameter or flags and outputs all your entries.
+
+```sh
+journal dump
 ```
 
 # Build

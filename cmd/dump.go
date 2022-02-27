@@ -16,28 +16,34 @@ limitations under the License.
 package cmd
 
 import (
-	"os"
+	"journal/log"
+	"journal/repository"
+	"journal/stream"
 
 	"github.com/spf13/cobra"
 )
 
-// rootCmd represents the base command when called without any subcommands
-var rootCmd = &cobra.Command{
-	Use:   "journal",
-	Short: "Journal - save your thoughts using a cli journal",
-	Long: `Journal is proudly presented as a tool to write and manage
-notes and thoughts, "recordar é viver!"`,
-}
-
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
-func Execute() {
-	err := rootCmd.Execute()
-	if err != nil {
-		os.Exit(1)
-	}
+// dumpCmd represents the dump command
+var dumpCmd = &cobra.Command{
+	Use:   "dump",
+	Short: "dump - dump outputs all entries of your journal",
+	Long: `The dump command is used to output all entries registered on your journal.
+It does not receive any parameter.
+Usage:
+	journal dump`,
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) > 0 {
+			log.Fatal("Error: journal dump must not receive any parameter!\n")
+		}
+		dumpEntries()
+	},
 }
 
 func init() {
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.AddCommand(dumpCmd)
+}
+
+func dumpEntries() {
+	entries := repository.ReadEntries("")
+	stream.OutputEntries(entries)
 }
