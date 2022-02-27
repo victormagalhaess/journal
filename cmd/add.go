@@ -17,6 +17,7 @@ package cmd
 
 import (
 	d "journal/date"
+	"journal/log"
 	"journal/repository"
 
 	"github.com/spf13/cobra"
@@ -35,6 +36,9 @@ journal add "Today I waste 15 minutes thinking in an entry example, :("
 journal add 14/2/2022 "Oh my god, I totally forgot to write about how normal 14/2/2022 was!"
 journal add today "I'm not thirsty at all today."`,
 	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 0 || len(args) > 2 {
+			log.Fatal("Error! journal add must receive 1 or 2 parameters, try journal add --help to see more.\n")
+		}
 		addEntry(args)
 	},
 }
