@@ -3,6 +3,7 @@ module journal
 go 1.16
 
 require (
+	github.com/google/go-cmp v0.5.7 // indirect
 	github.com/spf13/afero v1.8.1 // indirect
 	github.com/spf13/cobra v1.3.0 // indirect
 	github.com/spf13/viper v1.10.1 // indirect
