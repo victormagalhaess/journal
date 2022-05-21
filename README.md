@@ -122,3 +122,8 @@ It uses Cobra as the CLI framework and Go YAML as yaml parser. It also has its b
 
 The journal logo was made using Freepik flaticon free icons:
 <a href="https://www.flaticon.com/free-icons/journal" title="journal icons">Journal icons created by Freepik - Flaticon</a>
+
+### Eng. Software 2 group members: 
+- Bruno Ferreira
+- Luís Gustavo Silva
+- Victor Hugo Magalhães
