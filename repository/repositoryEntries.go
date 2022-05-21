@@ -78,17 +78,26 @@ func CleanFile() {
 	}
 }
 
-func DeleteEntry(key string, isDate bool) {
-	processedEntries := make([]Entry, 0)
-	entries := ReadEntries("")
+func getProcessedEntries(entries []Entry, date string) []Entry {
+	var processedEntries []Entry
 	for _, entry := range entries {
-		if (isDate && entry.Date == key) || entry.Text.Hash == key {
+		if entry.Date == date {
 			continue
 		}
 		processedEntries = append(processedEntries, entry)
 	}
-	CleanFile()
-	for _, entry := range processedEntries {
+	return processedEntries
+}
+
+func addEntries(entries []Entry) {
+	for _, entry := range entries {
 		addEntry(entry)
 	}
+}
+
+func DeleteEntry(key string, isDate bool) {
+	entries := ReadEntries("")
+	processedEntries := getProcessedEntries(entries, key)
+	CleanFile()
+	addEntries(processedEntries)
 }
