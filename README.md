@@ -114,7 +114,16 @@ journal is built in go, and can be built for your machine using:
 make build
 ```
 
+# Technologies
+The journal is built using golang 1.16.3 (but is compatible with any version since 1.13).
+It uses Cobra as the CLI framework and Go YAML as yaml parser. It also has its build automatizaded with Make, refer to the Build session to learn how to build it.
+
 # Credits
 
 The journal logo was made using Freepik flaticon free icons:
 <a href="https://www.flaticon.com/free-icons/journal" title="journal icons">Journal icons created by Freepik - Flaticon</a>
+
+### Eng. Software 2 group members: 
+- Bruno Ferreira
+- Luís Gustavo Silva
+- Victor Hugo Magalhães

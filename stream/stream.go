@@ -17,6 +17,16 @@ func OutputEntries(entries []repository.Entry) {
 	}
 }
 
+func isYes(response string) bool {
+	response = strings.ToLower(strings.TrimSpace(response))
+	return response == "y" || response == "yes"
+}
+
+func isNo(response string) bool {
+	response = strings.ToLower(strings.TrimSpace(response))
+	return response == "n" || response == "no"
+}
+
 func AskPermission(message string, in io.Reader) bool {
 	reader := bufio.NewReader(in)
 	for {
@@ -26,9 +36,9 @@ func AskPermission(message string, in io.Reader) bool {
 			log.Fatal("Error: An error occurred while reading your answer.")
 		}
 		response = strings.ToLower(strings.TrimSpace(response))
-		if response == "y" || response == "yes" {
+		if isYes(response) {
 			return true
-		} else if response == "n" || response == "no" {
+		} else if isNo(response) {
 			return false
 		}
 	}

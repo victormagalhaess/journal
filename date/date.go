@@ -3,7 +3,7 @@ package date
 import "time"
 
 const (
-	slashDDMMYY = "02/01/2006"
+	SlashDDMMYY = "02/01/2006"
 	dashDDMMYY  = "02-01-2006"
 	today       = "today"
 	yesterday   = "yesterday"
@@ -18,7 +18,7 @@ var specialDates map[string]dateFn = map[string]dateFn{
 
 func IsDate(input string) bool {
 	if _, exists := specialDates[input]; !exists {
-		_, err := time.Parse(slashDDMMYY, input)
+		_, err := time.Parse(SlashDDMMYY, input)
 		if err != nil {
 			_, err = time.Parse(dashDDMMYY, input)
 			if err != nil {
@@ -36,7 +36,7 @@ func DateParse(input string) string {
 	)
 
 	if _, exists := specialDates[input]; !exists {
-		date, err = time.Parse(slashDDMMYY, input)
+		date, err = time.Parse(SlashDDMMYY, input)
 		if err != nil {
 			date, err = time.Parse(dashDDMMYY, input)
 			if err != nil {
@@ -51,5 +51,5 @@ func DateParse(input string) string {
 }
 
 func dateFormatter(date time.Time) string {
-	return date.Format(slashDDMMYY)
+	return date.Format(SlashDDMMYY)
 }

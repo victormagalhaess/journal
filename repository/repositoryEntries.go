@@ -10,7 +10,13 @@ import (
 )
 
 const (
-	Separator = "# end\n"
+	separator          = "# end\n"
+	successAddingEntry = "Entry added with success!\n"
+	errorAddingEntry   = "Error: An error occurred while adding the entry!\n"
+	errorReadingFile   = "Error: An error occurred while reading the file!\n"
+	errorUnparsing     = "Error: An error occurred while unparsing the entries!\n"
+	errorCleaningFile  = "Error: An error occurred while cleaning the file!\n"
+	noEntriesFound     = "No entries found!\n"
 )
 
 func NewEntry(date string, text string) {
@@ -22,64 +28,76 @@ func NewEntry(date string, text string) {
 		},
 	}
 	addEntry(*entry)
-	log.Success("Entry added with success!\n")
+	log.Success(successAddingEntry)
 }
 
 func addEntry(entry Entry) {
 	d, err := yaml.Marshal(&entry)
 	if err != nil {
-		log.Fatal("Error: An error occurred saving the entry!\n")
+		log.Fatal(errorAddingEntry)
 		return
 	}
-	data := string(d) + Separator
+	data := string(d) + separator
 	add(data)
 }
 
-func ReadEntries(date string) []Entry {
+func verifyError(err error, message string) {
+	if err != nil {
+		log.Fatal(message)
+	}
+}
+
+func parseEntries(unparsedEntries []string) []Entry {
 	var (
 		entries = make([]Entry, 0)
 		entry   = &Entry{}
 	)
-	file, err := read()
-	if err != nil {
-		log.Fatal("Error: An error occurred reading the flatfile!\n")
+	for _, item := range unparsedEntries {
+		err := yaml.Unmarshal([]byte(item), &entry)
+		verifyError(err, errorUnparsing)
+		entries = append(entries, *entry)
 	}
-	unparsedEntries := strings.Split(file, Separator)
+	return entries
+}
+
+func ReadEntries(date string) []Entry {
+	file, err := read()
+	verifyError(err, errorReadingFile)
+	unparsedEntries := strings.Split(file, separator)
 	if len(unparsedEntries) == 0 {
-		log.Warning("No entries found!\n")
+		log.Warning(noEntriesFound)
 		return nil
 	}
 	unparsedEntries = unparsedEntries[:len(unparsedEntries)-1]
-	for _, item := range unparsedEntries {
-		err = yaml.Unmarshal([]byte(item), &entry)
-		if err != nil {
-			log.Fatal("Error: An error occurred unparsing the entries!\n")
-		}
-		if entry.Date == date || date == "" {
-			entries = append(entries, *entry)
-		}
-	}
-
-	return entries
+	return parseEntries(unparsedEntries)
 }
 
 func CleanFile() {
 	if err := clean(); err != nil {
-		log.Fatal("Error: An error occurred cleaning the file!")
+		log.Fatal(errorCleaningFile)
 	}
 }
 
-func DeleteEntry(key string, isDate bool) {
-	processedEntries := make([]Entry, 0)
-	entries := ReadEntries("")
+func getProcessedEntries(entries []Entry, date string) []Entry {
+	var processedEntries []Entry
 	for _, entry := range entries {
-		if (isDate && entry.Date == key) || entry.Text.Hash == key {
+		if entry.Date == date {
 			continue
 		}
 		processedEntries = append(processedEntries, entry)
 	}
-	CleanFile()
-	for _, entry := range processedEntries {
+	return processedEntries
+}
+
+func addEntries(entries []Entry) {
+	for _, entry := range entries {
 		addEntry(entry)
 	}
+}
+
+func DeleteEntry(key string, isDate bool) {
+	entries := ReadEntries("")
+	processedEntries := getProcessedEntries(entries, key)
+	CleanFile()
+	addEntries(processedEntries)
 }

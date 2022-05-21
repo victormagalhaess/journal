@@ -2,20 +2,24 @@ package log
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"runtime"
 )
 
 var (
-	reset  = "\033[0m"
-	red    = "\033[31m"
-	green  = "\033[32m"
-	yellow = "\033[33m"
-	white  = "\033[97m"
+	reset                    = "\033[0m"
+	red                      = "\033[31m"
+	green                    = "\033[32m"
+	yellow                   = "\033[33m"
+	white                    = "\033[97m"
+	Out       io.Writer      = os.Stdout
+	Exit      func(code int) = os.Exit
+	IsWindows                = runtime.GOOS == "windows"
 )
 
 func adjustEnv() {
-	if runtime.GOOS == "windows" {
+	if IsWindows {
 		reset = ""
 		red = ""
 		green = ""
@@ -26,12 +30,12 @@ func adjustEnv() {
 
 func print(message string, color string) {
 	adjustEnv()
-	fmt.Print(color + message + reset)
+	fmt.Fprint(Out, color+message+reset)
 }
 
 func printf(message string, color string, obj ...interface{}) {
 	adjustEnv()
-	fmt.Printf(color+message+reset, obj...)
+	fmt.Fprintf(Out, color+message+reset, obj...)
 }
 
 func Print(message string) {
@@ -52,12 +56,12 @@ func ErrorF(message string, obj ...interface{}) {
 
 func FatalF(message string, obj ...interface{}) {
 	ErrorF(message, obj...)
-	os.Exit(1)
+	Exit(1)
 }
 
 func Fatal(message string) {
 	Error(message)
-	os.Exit(1)
+	Exit(1)
 }
 
 func Success(message string) {
