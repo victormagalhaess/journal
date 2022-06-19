@@ -1,0 +1,21 @@
+name: Run tests on Ubuntu, Windows and Macos
+on:
+  pull_request:
+    branches: ["main"]
+  push:
+    branches: ["main"]
+
+jobs:
+  tests:
+    name: Run tests - OS > Ubuntu Latest - Go 1.16
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.16
+
+      - name: Running Unit Tests
+        run: go test -v -failfast -cover ./...
