@@ -3,6 +3,7 @@ package repository
 import (
 	"journal/log"
 	"strings"
+	"time"
 
 	"journal/crypto"
 
@@ -24,7 +25,7 @@ func NewEntry(date string, text string) {
 		Date: date,
 		Text: Text{
 			Value: text,
-			Hash:  crypto.GenerateHash(),
+			Hash:  crypto.GenerateHash(time.Now()),
 		},
 	}
 	addEntry(*entry)
