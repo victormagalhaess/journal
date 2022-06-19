@@ -16,6 +16,7 @@ var (
 	Out       io.Writer      = os.Stdout
 	Exit      func(code int) = os.Exit
 	IsWindows                = runtime.GOOS == "windows"
+	buffer                   = ""
 )
 
 func adjustEnv() {
@@ -28,14 +29,18 @@ func adjustEnv() {
 	}
 }
 
+func GetBuffer() string {
+	return buffer
+}
+
 func print(message string, color string) {
 	adjustEnv()
-	fmt.Fprint(Out, color+message+reset)
+	buffer = color + message + reset
+	fmt.Fprint(Out, buffer)
 }
 
 func printf(message string, color string, obj ...interface{}) {
-	adjustEnv()
-	fmt.Fprintf(Out, color+message+reset, obj...)
+	print(fmt.Sprintf(message, obj...), color)
 }
 
 func Print(message string) {
