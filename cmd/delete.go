@@ -41,7 +41,7 @@ Usage:
 		if len(args) > 1 {
 			log.Fatal("Error! journal delete must receive 0 or 1 parameters, try journal delete --help to see more.\n")
 		}
-		deleteEntry(args)
+		DeleteEntry(args)
 	},
 }
 
@@ -49,7 +49,7 @@ func init() {
 	rootCmd.AddCommand(deleteCmd)
 }
 
-func deleteEntry(args []string) {
+func DeleteEntry(args []string) {
 	key := args[0]
 	isDate := false
 	if isDate = d.IsDate(key); isDate {

@@ -35,7 +35,7 @@ Usage:
 		if len(args) > 0 {
 			log.Fatal("Error: journal dump must not receive any parameter!\n")
 		}
-		dumpEntries()
+		DumpEntries()
 	},
 }
 
@@ -43,7 +43,7 @@ func init() {
 	rootCmd.AddCommand(dumpCmd)
 }
 
-func dumpEntries() {
+func DumpEntries() {
 	entries := repository.ReadEntries("")
 	stream.OutputEntries(entries)
 }

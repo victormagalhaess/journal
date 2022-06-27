@@ -39,7 +39,7 @@ Usage:
 		if len(args) == 0 || len(args) > 2 {
 			log.Fatal("Error! journal add must receive 1 or 2 parameters, try journal add --help to see more.\n")
 		}
-		addEntry(args)
+		AddEntry(args)
 	},
 }
 
@@ -47,8 +47,8 @@ func init() {
 	rootCmd.AddCommand(addCmd)
 }
 
-// addEntry process the console entry and call the repository.AddEntry to save the data.
-func addEntry(args []string) {
+// AddEntry process the console entry and call the repository.AddEntry to save the data.
+func AddEntry(args []string) {
 	var date string
 	message := ""
 	if len(args) == 1 {

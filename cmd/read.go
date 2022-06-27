@@ -40,7 +40,7 @@ Usage:
 		if len(args) > 1 {
 			log.Fatal("Error! journal add must receive 0 or 1 parameters, try journal read --help to see more.\n")
 		}
-		readEntries(args)
+		ReadEntries(args)
 	},
 }
 
@@ -48,7 +48,7 @@ func init() {
 	rootCmd.AddCommand(readCmd)
 }
 
-func readEntries(args []string) {
+func ReadEntries(args []string) {
 	var date string
 	if len(args) == 0 {
 		date = d.DateParse("")

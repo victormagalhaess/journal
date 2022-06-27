@@ -36,7 +36,7 @@ journal purge`,
 		if len(args) > 0 {
 			log.Fatal("Error: journal purge must not receive any parameter!\n")
 		}
-		purgeEntries()
+		PurgeEntries()
 	},
 }
 
@@ -44,7 +44,7 @@ func init() {
 	rootCmd.AddCommand(purgeCmd)
 }
 
-func purgeEntries() {
+func PurgeEntries() {
 	message := "Are you sure you want to purge all your journal?"
 	if shouldPurge := stream.AskPermission(message, os.Stdin); shouldPurge {
 		repository.CleanFile()
