@@ -1,4 +1,5 @@
-TESTS?=$$(go list ./... | egrep -v "vendor|resources")
+UTESTS?=$$(go list ./... | egrep -v "vendor|integration")
+ITESTS?=$$(go list ./... | egrep "integration")
 BINARY=journal
 ENTRY=main.go
 
@@ -24,5 +25,10 @@ clean:
 	find ${ROOT_DIR} -name '${BINARY}[-?][a-zA-Z0-9]*[-?][a-zA-Z0-9]*' -delete
 	find ${ROOT_DIR} -name '${BINARY}' -delete
 
-test:
-	go test $(VERBOSE) $(TESTS) -failfast -cover
+test: utest itest
+
+itest:
+	go test $(VERBOSE) $(ITESTS) -failfast -cover
+
+utest:
+	go test $(VERBOSE) $(UTESTS) -failfast -cover
