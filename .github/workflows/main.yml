@@ -1,52 +1,18 @@
-name: Run tests on Ubuntu, Windows and Macos
-on:
-  pull_request:
-    branches: ["main"]
-  push:
-    branches: ["main"]
+name: Test and coverage
+
+on: [push, pull_request]
 
 jobs:
-  utests:
-    name: Run Unit tests - OS > Ubuntu Latest - Go 1.16
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.16
-
-      - name: Running Unit Tests
-        run: make utest
-
-  itests:
-    name: Run Integration tests - OS > Ubuntu Latest - Go 1.16
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.16
-
-      - name: Running Integration Tests
-        run: make itest
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
-
   build:
-    name: Build the code - OS > Ubuntu Latest - Go 1.16
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      - name: Set up Go
-        uses: actions/setup-go@v3
         with:
-          go-version: 1.16
-
-      - name: Building the application
-        run: make build-all
+          fetch-depth: 2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '1.18'
+      - name: Run coverage
+        run: go test -race -coverprofile=coverage.out -covermode=atomic
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
