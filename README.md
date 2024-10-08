@@ -4,14 +4,6 @@
   <img src="https://github.com/victormagalhaess/journal/blob/main/public/journal.png?raw=true" width="200" alt="Journal Logo">
 </p>
 
-### Teste de software group members:
-
-- Arthur Codama
-- Gabriel Marques
-- Gabriela Ciríaco
-- Matheus Marques
-- Victor Hugo Magalhães
-
 Journal is a command line journal heavily inspired by [journal-cli](https://journalcli.app/).
 It aims to keep all your entries in an easy to read and manipulate file, allowing you to take notes and consulting them later.
 Entries saved on the journal are logged in the following way when read:
